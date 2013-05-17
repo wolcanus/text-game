@@ -1,14 +1,25 @@
-Installation
+Texugo Engine
 ============
 
-To play, run `play.rb` :smile:
+Origem do nome
+--------------
 
-Commands
+*Tex*: Se refere a texto, já que se trata de uma engine para jogos baseados em texto.
+*Ugo*: Se refere a vômito.
+
+*Texugo*: Homenagem ao nosso amigo @BrunoGrasselli
+
+Jogar
+-----
+
+Para jogar, rode `play.rb` :smile:
+
+Comandos
 --------
 
-*General Overview - additional commands may be given in prompt*
+Apenas um overview pois, comandos adicionais serão providos pelo prompt.
 
-#### Exit game
+#### Sair do jogo
 
 Type `exit` closes game when not in combat
 
