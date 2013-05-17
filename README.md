@@ -5,6 +5,7 @@ Origem do nome
 --------------
 
 *Tex*: Se refere a texto, já que se trata de uma engine para jogos baseados em texto.
+
 *Ugo*: Se refere a vômito.
 
 *Texugo*: Homenagem ao nosso amigo @BrunoGrasselli
