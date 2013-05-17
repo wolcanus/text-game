@@ -1,8 +1,16 @@
-To use this, run test.rb
+Installation
+============
 
-commands (general overview - additional commands may be given in prompt)
+To play, run `play.rb` :smile:
 
-typing 'exit' closes game when not in combat
+Commands
+--------
+
+*General Overview - additional commands may be given in prompt*
+
+#### Exit game
+
+Type `exit` closes game when not in combat
 
 For all commands that require specification (using items, moving places, etc)
 type the command first, return, and then type the specification.
