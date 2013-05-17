@@ -1,4 +1,4 @@
-require 'player'
+require_relative 'player'
 
 
 def potion(user = $player)
@@ -35,7 +35,7 @@ end
 
 class Purse
 	attr_accessor :amount
-	
+
 	def initialize(amount)
 		@amount = amount
 	end
@@ -46,7 +46,7 @@ end
 
 class Keyitem
 	attr_accessor :name
-	
+
 	def initialize(name)
 		@name = name
 	end

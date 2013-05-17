@@ -1,19 +1,19 @@
-require 'player'
-require 'maps'
-require 'spells'
-require 'items'
-require 'armour'
-require 'weapons'
-require 'characters'
-require 'hamlet'
-require 'middleton'
-require 'denofshadows'
-require 'northshire'
-require 'ridgedale'
-require 'commands'
-require 'rand_fight'
+require_relative 'player'
+require_relative 'maps'
+require_relative 'spells'
+require_relative 'items'
+require_relative 'armour'
+require_relative 'weapons'
+require_relative 'characters'
+require_relative 'hamlet'
+require_relative 'middleton'
+require_relative 'denofshadows'
+require_relative 'northshire'
+require_relative 'ridgedale'
+require_relative 'commands'
+require_relative 'rand_fight'
 
-require 'books'
+require_relative 'books'
 
 o = ''
 while true
@@ -26,7 +26,7 @@ while true
 			str = dir
 			str = str.sub 'games/', ''
 			puts str.sub '/', ''
-		end			
+		end
 		name = gets.chomp
 		if File.directory?("games/#{name}")
 			File.open("games/#{name}/#{name}") do |file|
@@ -37,20 +37,20 @@ while true
 				File.open("games/#{$player.name}/#{char.name}") do |file|
 					char = Marshal.load(file)
 				end
-			end		
+			end
 
 			$player.party.each do |char|
 				File.open("games/#{$player.name}/#{char.name}", "w+") do |file|
 					Marshal.dump(char, file)
 				end
-			end	
+			end
 
 			$player.maps.each do |area|
 				File.open("games/#{$player.name}/#{area.name}") do |file|
 					area = Marshal.load(file)
 				end
 			end
-			
+
 			$player.visited.each do |location|
 				location.each do |place|
 					File.open("games/#{$player.name}/#{place.name}") do |file|
@@ -72,7 +72,7 @@ while true
 		puts ''
 		puts 'Please enter a name for your character.'
 		name = gets.chomp
-		
+
 		def attribute_total(stats)
 			stats[:strength] + stats[:endurance] + stats[:agility] + stats[:intelligence]
 		end
@@ -99,9 +99,9 @@ while true
 			puts 'You only have 20 points to distribute!!!' if attribute_total(player_attribute) > 20
 			puts 'Please distribute all of the points.' if attribute_total(player_attribute) < 20
 		end
-		
+
 		$player = Player.new(name,player_attribute[:strength], player_attribute[:endurance], player_attribute[:agility], player_attribute[:intelligence])
-		
+
 		$player.maps << Hamletmap
 		$player.area << Hamlet
 		$player.visited << Hamletloc
@@ -181,20 +181,20 @@ while true
 					File.open("games/#{$player.name}/#{char.name}") do |file|
 						char = Marshal.load(file)
 					end
-				end		
+				end
 
 				$player.party.each do |char|
 					File.open("games/#{$player.name}/#{char.name}", "w+") do |file|
 						Marshal.dump(char, file)
 					end
-				end	
+				end
 
 				$player.maps.each do |area|
 					File.open("games/#{$player.name}/#{area.name}") do |file|
 						area = Marshal.load(file)
 					end
 				end
-				
+
 				$player.visited.each do |location|
 					location.each do |place|
 						File.open("games/#{$player.name}/#{place.name}") do |file|

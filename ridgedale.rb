@@ -1,8 +1,8 @@
-require 'monsters'
+require_relative 'monsters'
 
 class Ridge_dale
 	attr_accessor :name, :locations, :visit, :fightchance, :monsters
-	
+
 	def initialize(name = 'Ridgedale', locations = {}, visit = 0, fight_chance = 8, monsters = 1)
 		@name = name
 		@locations = locations
@@ -10,13 +10,13 @@ class Ridge_dale
 		@fightchance = fight_chance
 		@monsters = monsters
 	end
-	
+
 	def introduction
 	end
-	
+
 	def look
 	end
-	
+
 	def monster
 		return Human.new('Mugger')
 	end

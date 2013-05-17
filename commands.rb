@@ -1,10 +1,10 @@
 Commands_outside = ['use','inventory', 'equip', 'move', 'travel', 'look', 'stats', 'party']
 Commands_fight = ['use','cast','hit','inventory']
 
-require 'hamlet'
-require 'middleton'
-require 'denofshadows'
-require 'books'
+require_relative 'hamlet'
+require_relative 'middleton'
+require_relative 'denofshadows'
+require_relative 'books'
 def inventory(player = $player)
 	invtry = []
 	maplist = []
@@ -147,7 +147,7 @@ def hit(offense = $player, defense = @monster)
 	elsif defense.class == Spector
 		puts 'The attack has no effect' if offense == $player
 		puts "#{offense.name}'s attack has no effect" unless offense == $player
-	else 
+	else
 		puts 'You land a blow square on the monsters head' if offense == $player
 		puts "#{offense.name}'s lands a blow square on the monsters head" unless offense == $player
 	end
@@ -230,19 +230,19 @@ def sleep
 	File.open("games/#{$player.name}/#{$player.name}", "w+") do |file|
 		Marshal.dump($player, file)
 	end
-	
+
 	$player.party.each do |char|
 		File.open("games/#{$player.name}/#{char.name}", "w+") do |file|
 			Marshal.dump(char, file)
 		end
-	end	
-	
+	end
+
 	$player.maps.each do |area|
 		File.open("games/#{$player.name}/#{area.name}", "w+") do |file|
 			Marshal.dump(area.location, file)
 		end
 	end
-	
+
 	$player.visited.each do |location|
 		location.each do |place|
 			File.open("games/#{$player.name}/#{place.name}", "w+") do |file|
@@ -274,7 +274,7 @@ def take
 			$player.position[0].inventory.each do |item|
 				if item.class == Maps
 					map += 1
-					$player.maps << item 
+					$player.maps << item
 					$player.position[0].inventory.delete_at($player.position[0].inventory.index(item))
 					puts "taken #{response}"
 				end

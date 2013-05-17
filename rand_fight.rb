@@ -1,6 +1,6 @@
-require 'commands'
-require 'timer'
-require 'monsters'
+require_relative 'commands'
+require_relative 'timer'
+require_relative 'monsters'
 
 def rand_monster
 	roll = (rand($player.level * 2) + 1)
@@ -20,7 +20,7 @@ def fight(monster = rand_monster, player = $player)
 	puts''
 	puts @monster.name.to_s + ' Approaches'
 	puts ''
-	
+
 	puts @monster.name.to_s + "'s life is " + @monster.life.to_s
 	puts 'Your life is ' + player.life.to_s
 	puts 'You have ' + player.magic.to_s + ' magic'
@@ -64,7 +64,7 @@ def fight(monster = rand_monster, player = $player)
 				damage = (@monster.strength * (rand(6)+1) - player.armour_rating)
 				unless damage < 0
 					puts 'and hits you!'
-					player.life -= damage 
+					player.life -= damage
 				end
 				puts 'Your armour absorbs the blow' if damage <= 0
 			else
@@ -77,7 +77,7 @@ def fight(monster = rand_monster, player = $player)
 				damage = (@monster.strength * (rand(6)+1) - defender.armour_rating)
 				unless damage < 0
 					puts "and hits #{defender.name}!"
-					defender.life -= damage 
+					defender.life -= damage
 				end
 				puts "#{defender.name}'s armour absorbs the blow" if damage <= 0
 			else
@@ -85,7 +85,7 @@ def fight(monster = rand_monster, player = $player)
 			end
 		end
 		timer
-		puts''	
+		puts''
 		puts @monster.name.to_s.capitalize + "'s life is " + @monster.life.to_s
 		puts ''
 		player.party.each do |char|

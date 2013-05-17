@@ -1,8 +1,8 @@
-require 'items'
-require 'timer'
+require_relative 'items'
+require_relative 'timer'
 class DenoShadow
 	attr_accessor :name, :locations, :visit, :fightchance, :monsters
-	
+
 	def initialize (name = 'Den of Shadows', locations={'east' => DenEast, 'west' => DenWest, 'northeast' => DenNortheast, 'north' => DenNorth}, visit = 0, fightchance = 3, monsters = 0)
 		@name = name
 		@locations = locations
@@ -10,7 +10,7 @@ class DenoShadow
 		@fightchance = fightchance
 		@monsters = monsters
 	end
-	
+
 	def introduction
 		if self.visit == 0
 			puts 'You find yourself at the mouth of a large cave. The wind is'
@@ -21,7 +21,7 @@ class DenoShadow
 			puts 'into the cave.'
 			$player.visited << Den_of_Shadowsloc
 		end
-		
+
 		unless self.visit == 0
 			puts 'You find yourself at the mouth of a large cave. The wind is'
 			puts 'blowing in such a manner that a low, howling noise can be heard.'
@@ -35,20 +35,20 @@ class DenoShadow
 		puts 'corridors branching from this cavern. You see a light flickering from'
 		puts 'the northern most pathway. (north, east, west, northeast)'
 	end
-	
-	
+
+
 end
 
 class Den_north
 	attr_accessor :name, :commands, :inventory, :visit
-	
+
 	def initialize (name = 'northern cavern', commands = ['leave', 'take', 'look'], inventory = ['book of mysteries', 'book of heal', Purse.new(150)])
 		@name = name
 		@commands = commands
 		@inventory = inventory
 		@visit = visit
 	end
-	
+
 	def introduction
 		if self.inventory.include?('book of mysteries')
 			timer
@@ -90,13 +90,13 @@ class Den_north
 			$player.inventory << 'book of mysteries'
 			self.inventory.delete_at(self.inventory.index('book of mysteries').to_i)
 		end
-		
+
 		unless self.inventory.include? Book_of_mysteries
 			puts 'You step over the body of the creature you have slain. Its unusual featurs'
 			puts 'still unsettle you.'
 		end
 	end
-	
+
 	def look
 		coin = 0
 		self.inventory.each do |item|
@@ -106,7 +106,7 @@ class Den_north
 		puts "You see a book laying near the wall with the word 'heal' printed on it.(book of heal)" if self.inventory.include? 'book of heal'
 		puts 'The den is cold and dark. There is nothing of interest here.' if self.inventory.length == 0
 	end
-	
+
 	def leave
 		$player.position.delete_at (0)
 	end
@@ -114,79 +114,79 @@ end
 
 class Den_northeast
 	attr_accessor :name, :commands
-	
+
 	def initialize (name = 'northeastern cavern', commands = ['sleep', 'look', 'leave'])
 		@name = name
 		@commands = commands
 	end
-	
+
 	def introduction
 		puts 'You walk into the cavern. It is cold and smells of mildew'
 	end
-	
+
 	def look
 		puts 'You see a crudely made burlap sleeping area. (sleep)'
 	end
-	
+
 	def leave
 		$player.position.delete_at (0)
-	end	
-	
+	end
+
 end
 
 class Den_east
 	attr_accessor :name, :commands, :inventory
-	
+
 	def initialize(name = 'eastern cavern', commands = ['look', 'take', 'leave'], inventory = ['club', 'wicker shield'])
 		@name = name
 		@commands = commands
 		@inventory = inventory
 	end
-	
+
 	def introduction
 		puts 'You walk into the small cavern.'
 	end
-	
-	
+
+
 	def look
 		puts 'On the floor before you lies a poorly made wicker shield.' if self.inventory.include? 'wicker shield'
 		puts 'Leaning against the far wall is a crude looking club.' if self.inventory.include? 'club'
 		puts 'The room is small and damp. There is nothing here of any interest.' if self.inventory.length == 0
 	end
-	
+
 	def leave
 		$player.position.delete_at (0)
-	end	
+	end
 end
 
 class Den_west
 	attr_accessor :name, :commands, :inventory
-	
+
 	def initialize (name = 'western cavern', commands = ['look', 'take', 'leave'], inventory = ['potion', 'potion'])
 		@name = name
 		@commands = commands
 		@inventory = inventory
 	end
-	
+
 	def introduction
 		puts 'Light from your torch glistens on the wet walls of the cavern.'
 	end
-	
+
 	def look
 		repeats = Hash.new(0)
 		self.inventory.each do |item|
 			repeats[item] += 1
 		end
-		
+
 		puts 'You see some potions lying on the floor against the wall.' if self.inventory.include? 'potion'
 		repeats.each {|item, number| puts "(#{item} x #{number})"} if self.inventory.include? 'potion'
 		puts 'There is nothing else that you find interesting here.' if self.inventory.length == 0
 	end
-	
+
 	def leave
 		$player.position.delete_at (0)
 	end
-	
+
 end
 
 DenNorth = Den_north.new

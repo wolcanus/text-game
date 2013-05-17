@@ -1,10 +1,10 @@
-require 'modules'
-require 'monsters'
-require 'characters'
+require_relative 'modules'
+require_relative 'monsters'
+require_relative 'characters'
 
 class Northshre
 	attr_accessor :name, :locations, :visit, :fightchance, :monsters
-	
+
 	def initialize(name = 'Northshire', locations = {'inn' => NorthshireInn, 'shop' => NorthshireShop, 'tavern' => NorthshireTavern, 'house' => NorthshireHouse}, visit = 0, fight_chance = 12, monsters = 1)
 		@name = name
 		@locations = locations
@@ -12,7 +12,7 @@ class Northshre
 		@fightchance = fight_chance
 		@monsters = monsters
 	end
-	
+
 	def introduction
 		puts "You come upon a small town. The buildings here, though seemingly in full"
 		puts "operation, have not been maintained well. You suspect this town doesnt get much"
@@ -22,7 +22,7 @@ class Northshre
 		puts "intense meloncholy merely by being there. You hope your time in this town will"
 		puts "be short as you set off to discover what the town holds"
 	end
-	
+
 	def look
 		puts "The lack of care and maintanance of the buildings immediatly stand out to you,"
 		puts "but, inspite of this, their functions are easily recognizable. Along the"
@@ -30,7 +30,7 @@ class Northshre
 		puts "a tavern right next to it. Further down the road is you notice an inn."
 		puts "(shop, tavern, inn)"
 	end
-	
+
 	def monster
 		return Human.new("Mugger")
 	end
@@ -38,24 +38,24 @@ end
 
 class Northshire_inn
 		attr_accessor :name, :commands
-	
+
 	include Inn
-	
+
 	def initialize(name = 'Northshire Inn', commands = ['leave', 'look', 'rest'])
 		@name = name
 		@commands = commands
 	end
-	
+
 	def leave
 		$player.position.delete_at (0)
 	end
-	
+
 	def introduction
 		puts 'You walk into the inn. The interior is just as bleak as the rest of the town.'
 		puts "You see the innkeeper - a sad looking man - who asks if you would like a room."
 		puts "(rest)"
 	end
-	
+
 	def look
 		puts 'You see the innkeeper behind a wooden counter. Their is little light here, but'
 		puts 'enough to see that the walls are bare. There is nothing of any interest here.'
@@ -64,9 +64,9 @@ end
 
 class Northshire_shop
 	attr_accessor :name, :commands ,:items, :weapons, :spells, :armour
-	
+
 	include Shop
-	
+
 	def initialize(name = 'Northshire Shop', commands = ['buy', 'sell','leave'], items = ['potion', 'mana'], weapons = ['club'], spells = ['holy', 'heal'], armour = ['hat', 'wicker shield', 'leather gloves', 'chain helmet'])
 		@name = name
 		@items = items
@@ -75,18 +75,18 @@ class Northshire_shop
 		@armour = armour
 		@commands = commands
 	end
-	
+
 	def introduction
 		puts 'A man sits behind the counter. He offers no welcome or assitance, but just'
 		puts 'looks as you stand there.'
 	end
-	
+
 	def look
 		puts 'The shops interior matches the depressing nature of the whole town. There are'
 		puts 'not many items that you can see, and what you can see is not very impressive.'
 		puts '(buy or sell)'
 	end
-	
+
 	def leave
 		$player.position.delete_at (0)
 	end
@@ -94,13 +94,13 @@ end
 
 class Northshire_tavern
 	attr_accessor :name, :commands, :inventory
-	
+
 	def initialize(name = 'Northshire Tavern', commands = ['leave', 'talk'], inventory = [Martin])
 		@name = name
 		@commands = commands
 		@inventory = inventory
 	end
-	
+
 	def introduction
 		puts 'You walk into the tavern, noticing that there are very few patrons. The bar,'
 		puts 'behind which you see a rough looking man with sunken eyes, is splintered and'
@@ -109,12 +109,12 @@ class Northshire_tavern
 			puts self.inventory[0].name
 		end
 	end
-	
-	
+
+
 	def leave
 		$player.position.delete_at (0)
 	end
-	
+
 	def talk
 		if self.inventory.include? (Martin)
 			$player.party << Martin
@@ -125,18 +125,18 @@ class Northshire_tavern
 			puts 'There is no one here worth talking to'
 		end
 	end
-	
+
 end
 
 class Northshire_house
 	attr_accessor :name, :commands, :visit
-	
+
 	def initialize (name = 'Northshire House', commands = ['leave'], visit = 0)
 		@name = name
 		@commands = commands
 		@visit = visit
 	end
-	
+
 	def introduction
 		unless ($player.party.include? Martin) || (self.visit != 0)
 			puts self.visit
@@ -147,7 +147,7 @@ class Northshire_house
 			puts 'you are here'
 		end
 	end
-	
+
 	def leave
 		$player.position.delete_at (0)
 	end

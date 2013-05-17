@@ -1,10 +1,10 @@
-require 'weapons'
-require 'armour'
-require 'spells'
+require_relative 'weapons'
+require_relative 'armour'
+require_relative 'spells'
 
 class Character
 	attr_accessor :name, :strength, :endurance, :agility, :intelligence, :life, :magic, :level, :experience, :spells, :armour, :weapon
-	
+
 	def initialize(name, strength, endurance, agility, intelligence, level, experience, weapon = '', headgear = None, feet =None, hands = None, shield = None, armour = None)
 		@name = name
 		@strength = strength
@@ -19,7 +19,7 @@ class Character
 		@armour = [headgear, feet, hands, shield, armour]
 		@weapon = [weapon]
 	end
-	
+
 	def armour_rating
 		initial_rating = 0
 		self.armour.each do |armour|
@@ -27,13 +27,13 @@ class Character
 		end
 		return initial_rating
 	end
-	
+
 	def attribute
 		{:strength => strength, :endurance => endurance, :agility => agility, :intelligence => intelligence}.each do |attribute, value|
 			puts attribute.to_s.capitalize + ': ' + value.to_s
 		end
 	end
-	
+
 	def stats
 		puts '='*10
 		self.attribute
@@ -48,4 +48,4 @@ class Character
 end
 
 Martin = Character.new('Martin', 6, 10, 7, 5, 3, 449, Club, Hat, Leather, Shield)
-require 'northshire'
+require_relative 'northshire'

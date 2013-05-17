@@ -1,13 +1,13 @@
-require 'spells'
-require 'items'
-require 'armour'
-require 'weapons'
-require 'modules'
-require 'maps'
+require_relative 'spells'
+require_relative 'items'
+require_relative 'armour'
+require_relative 'weapons'
+require_relative 'modules'
+require_relative 'maps'
 
 class Middle_ton
 	attr_accessor :name, :locations, :visit, :fightchance, :monsters
-	
+
 	def initialize(name = 'Middleton', locations = {'inn' => Mddltn_inn, 'shop' => Mddltn_shop, 'church' => Mddltn_church}, visit = 0, fight_chance = 11, monsters = 0)
 		@name = name
 		@locations = locations
@@ -15,7 +15,7 @@ class Middle_ton
 		@fightchance = fight_chance
 		@monsters = monsters
 	end
-	
+
 	def introduction
 		if self.visit == 0
 			puts 'You come up to the edge of a small farm. You see a farmer on the other side'
@@ -34,9 +34,9 @@ class Middle_ton
 			puts 'living souls here is reassuring. You see a sign as you pass the first building.'
 			puts "It reads 'Middleton'"
 			puts''
-			$player.visited << Middletonloc			
+			$player.visited << Middletonloc
 		end
-		
+
 		if ($player.inventory.include? 'book of mysteries') && (visit == 1)
 			$player.maps << Northshiremap
 			self.visit += 1
@@ -50,9 +50,9 @@ class Middle_ton
 			puts ''
 			puts "northshire map added"
 		end
-		
+
 	end
-	
+
 	def look
 		puts 'You see people walking to and from the various buildings in the town though'
 		puts 'none of them seem to be in a particular hurry. You conclude that this must'
@@ -62,30 +62,30 @@ class Middle_ton
 		puts '(move: inn, shop, church)'
 		puts ''
 	end
-	
+
 end
 
-	
+
 
 class MddltnInn
 	attr_accessor :name, :commands
-	
+
 	include Inn
-	
+
 	def initialize(name = 'Middleton Inn', commands = ['leave', 'look', 'rest'])
 		@name = name
 		@commands = commands
 	end
-	
+
 	def leave
 		$player.position.delete_at (0)
 	end
-	
+
 	def introduction
 		puts 'You walk into the inn. The Innkeeper looks at you and offers her welcome and'
 		'asks if she can offer you a room. (rest)'
 	end
-	
+
 	def look
 		puts 'You see the innkeeper behind a wooden counter. Various paintings of landscapes'
 		puts 'Hang from the wall and there is a large vase filled with some colorful flowers'
@@ -95,9 +95,9 @@ end
 
 class Middleton_shop
 	attr_accessor :name, :commands ,:items, :weapons, :spells, :armour
-	
+
 	include Shop
-	
+
 	def initialize(name = 'Middleton Shop', commands = ['buy', 'sell','leave'], items = ['potion'], weapons = ['club', 'sword'], spells = ['holy'], armour = ['hat', 'leather vest', 'leather shoes'])
 		@name = name
 		@items = items
@@ -106,22 +106,22 @@ class Middleton_shop
 		@armour = armour
 		@commands = commands
 	end
-	
+
 	def introduction
 		puts 'You walk into the shop to see an older man sitting behind a wooden counter.'
 		puts 'He stands up and welcomes you. After a moment, he asks you if he can help you'
 		puts 'with anything. (buy or sell)'
 	end
-	
+
 	def look
 		puts 'You see several types of objects hanging on the wall - tools, you assume, for'
 		puts 'the farmers. In a corner behind the desk, you see a few options for things you'
 		puts 'might find useful - a club, a few pieces of armour and some potions. A peaceful'
-		puts 'town like this obviously doesnt have much need for a large defensive stock.' 
+		puts 'town like this obviously doesnt have much need for a large defensive stock.'
 		puts 'These items are apparently being gaurded closely so there is nothing you can'
 		puts 'take.'
 	end
-	
+
 	def leave
 		$player.position.delete_at (0)
 	end
@@ -129,7 +129,7 @@ end
 
 class Middleton_church
 	attr_accessor :name, :commands, :inventory, :people, :seen, :spoken
-	
+
 	def initialize(name = 'Middleton Church', commands = ['look', 'leave', 'talk'], inventory = [DenofShadowsmap], people = ['priest'], seen = 0, spoken = 0)
 		@name = name
 		@commands = commands
@@ -138,14 +138,14 @@ class Middleton_church
 		@seen = seen
 		@spoken = spoken
 	end
-	
+
 	def introduction
 		puts 'The large doors slam behind you as you walk into the church. The interior is'
 		puts 'much larger than you would have expected judging from the outside. As you walk'
 		puts 'down the isle, your footsteps echo throughout the room. The silence of this'
 		puts 'place is beginning to unsettle you.'
 	end
-	
+
 	def look
 		unless self.seen > 0
 			puts 'You look around the church and are immediately taken aback by the luxury of the'
@@ -167,13 +167,13 @@ class Middleton_church
 		if $player.maps.include? DenofShadowsmap && ((self.inventory.include? Book_of_mysteries) == false)
 			puts 'You see the man waiting, somewhat impatiently, near the entrance of the church.(talk)'
 		end
-		
+
 		if self.inventory.include? Book_of_mysteries
 			puts 'You see the man standing quietly near the large statue.(talk)'
 		end
-		
+
 	end
-	
+
 	def talk
 		if self.inventory.include? DenofShadowsmap
 			puts 'You walk up to the man. He is small and frail and his face is lined as though'
@@ -192,12 +192,12 @@ class Middleton_church
 			puts 'map to den of shadows added'
 			puts ''
 		end
-		
+
 		unless ($player.inventory.include?('book of mysteries')) || (self.inventory.include? ('book of mysteries'))
 			puts "The man: 'Please return immediatly once you have obtained the book.'"
 		end
-		
-		
+
+
 		if $player.inventory.include? 'book of mysteries'
 			puts "The man's disposition changes greatly when you present to him the book. He"
 			puts "quickly grabs it, taking it from your hands almost violently and hugs it"
@@ -217,14 +217,14 @@ class Middleton_church
 			self.inventory << 'book of mysteries'
 			$player.inventory.delete_at($player.inventory.index('book of mysteries'))
 		end
-		
+
 		if self.inventory.include? 'book of mysteries'
 			puts "The Man: The arch counsiler can offer you more than what I can. I wish you well"
 			puts "on your journey."
 		end
-		
+
 	end
-	
+
 	def leave
 		$player.position.delete_at (0)
 	end

@@ -1,4 +1,4 @@
-require 'shop'
+require_relative 'shop'
 
 class Player
 	attr_accessor :name, :strength, :endurance, :agility, :intelligence, :life, :magic, :level, :experience, :inventory, :spells, :armour, :weapon, :gold, :area, :position, :maps, :party, :visited
@@ -23,8 +23,8 @@ class Player
 		@maps = []
 		@party = []
 		@visited = []
-	end	
-	
+	end
+
 	def armour_rating
 		initial_rating = 0
 		self.armour.each do |armour|
@@ -32,7 +32,7 @@ class Player
 		end
 		return initial_rating
 	end
-	
+
 	def attribute
 		{:strength => strength, :endurance => endurance, :agility => agility, :intelligence => intelligence}.each do |attribute, value|
 			puts 'Your ' + attribute.to_s.capitalize + ' is ' + value.to_s
@@ -61,5 +61,5 @@ def level_up?(player)
 			player.life = player.endurance * 10
 			player.magic = player.intelligence * 3
 		end
-	end		
+	end
 end
